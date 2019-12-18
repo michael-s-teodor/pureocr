@@ -1,12 +1,12 @@
-from preprocessor import PreProcessor
+#### Libraries
+# Own libraries
+from preprocessor import Preprocessor
 from recogniser import Recogniser 
 from network import Network
 
-
-img = PreProcessor("samples/2.jpg")
+#### Main
+img = Preprocessor("samples/2.jpg")
 recogniser = Recogniser()
-#======================================#
-img.processImage()
-img.convertToBinary()
-img.previewImg()
-#======================================#
+img.process_image()
+img.convert_to_binary()
+img.preview_image()

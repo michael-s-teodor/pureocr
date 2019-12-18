@@ -1,6 +1,6 @@
 #### Libraries
 # Own libraries
-from wham_sort import Wham_Sort
+from essentials import Essentials
 # Third-party libraries
 import cv2
 

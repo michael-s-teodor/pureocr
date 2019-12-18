@@ -1,5 +1,5 @@
 #### Class
-class Wham_Sort():
+class Essentials():
 
     def wham_sort(length, arr):
 

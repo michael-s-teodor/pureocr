@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+@authors: Mihnea S. Teodorescu & Moe Assaf, University of Groningen
+"""
+
 #### Libraries
 # Own libraries
 from preprocessor import Preprocessor
@@ -8,5 +14,5 @@ from network import Network
 img = Preprocessor("../samples/2.jpg")
 recogniser = Recogniser()
 img.process_image()
-img.convert_to_binary()
+# img.convert_to_binary()
 img.preview_image()

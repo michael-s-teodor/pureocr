@@ -25,7 +25,7 @@ class Preprocessor():
     def process_image(self):
         self.threshold = get_threshold(self.height, self.width, self.img)
         self.char_anchors = find_letters(self.height, self.width, self.threshold, self.img)
-        self.char_anchors = wham_sort(self.char_anchors, 1)
+        Essentials().wham_sort_by(len(self.char_anchors), self.char_anchors, 1)
         self.char_anchors_rows = recognise_lines(self.char_anchors)
         self.char_anchors_rows = sort_letters_in_order(self.char_anchors_rows)
         self.char_anchors_rows = merge_neighbours(self.char_anchors_rows)
@@ -152,21 +152,11 @@ def recognise_lines(char_anchors):
         n+=1
     return char_anchors_rows
 
-# def bubble_sort(arr, by):
-#     length = len(arr)
-#     for i in range(length-1):
-#         for j in range(length-1):
-#             if (arr[j][by] > arr[j+1][by]):
-#                 temp = arr[j+1]
-#                 arr[j+1] = arr[j]
-#                 arr[j] = temp
-#     return arr
-
 def sort_letters_in_order(char_anchors_rows):
     for row in range(len(char_anchors_rows)):
 
         # Sort by x
-        char_anchors_rows[row] = wham_sort(char_anchors_rows[row], 0)
+        Essentials().wham_sort_by(len(char_anchors_rows[row]), char_anchors_rows[row], 0)
     return char_anchors_rows
 
 def merge_neighbours(char_anchors_rows):

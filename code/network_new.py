@@ -15,15 +15,19 @@ class NeuralNetwork:
         self.layer = [[]] * self.layer_num
         self.layer[0] = x # input layer
         self.weights = [[]] * self.layer_num
-        self.weights[1]= np.random.rand(self.layer[0].shape[1],4) # considering we have 4 nodes in the hidden layer
-        self.weights[2] = np.random.rand(4,1)
+        # self.weights[1]= np.random.rand(self.layer[0].shape[1], 4) # considering we have 4 nodes in the hidden layer
+        # self.weights[2] = np.random.rand(4, 1)
+        self.weights[1]= np.random.rand(x.shape[1], sizes[1])
+        for i in range(2, self.layer_num-1):
+            self.weights[i] = np.random.rand(sizes[i-1], sizes[i])
+        self.weights[self.layer_num-1] = np.random.rand(sizes[self.layer_num-2], y.shape[1])
         self.y = y
         self.output = np.zeros(y.shape)
 
     def feed_forward(self):
         for i in range(1, self.layer_num):
             self.layer[i] = sigmoid(np.dot(self.layer[i-1], self.weights[i]))
-        return self.layer[2]
+        return self.layer[self.layer_num-1]
         
     def back_prop(self):
         d_weights = [[]] * self.layer_num
@@ -50,10 +54,18 @@ def sigmoid_derivative(p):
 #### Local main
 if __name__ == "__main__":
     # Input
-    x = np.array(([0,0,1],[0,1,1],[1,0,1],[1,1,1]), dtype=float)
-    y = np.array(([0],[1],[1],[0]), dtype=float)
+    x = np.array(([0,0,1], 
+                  [0,1,1],
+                  [1,0,1],
+                  [1,1,1]), dtype=float)
+    
+    # Desired output
+    y = np.array(([0],
+                  [1],
+                  [1],
+                  [0]), dtype=float)
 
-    NN = NeuralNetwork(x, y, [0, 0, 0])
+    NN = NeuralNetwork(x, y, [0, 4, 0])
     for i in range(1500): # trains the NN 1,000 times
         if i % 100 ==0: 
             print ("for iteration # " + str(i) + "\n")

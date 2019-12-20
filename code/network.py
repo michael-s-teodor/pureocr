@@ -10,7 +10,6 @@ import numpy as np
 
 #### Class
 class Network(object):
-
     def __init__(self, sizes):
         # sizes = number of neurons per layer [input, hidden, ..., hidden, output]
         self.num_layers = len(sizes)

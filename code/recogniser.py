@@ -12,7 +12,6 @@ from network import Network
 net = Network([10000, 10, 10, 94])
 
 class Recogniser():
-    
     def __init__(self):
         pass
     

@@ -6,8 +6,7 @@
 
 #### Class declaration
 class Essentials():
-
-    #### Sorting algorithms
+    # Sorting algorithms
     def wham_sort(length, arr):
         # Break recursive step
         if (length <= 1):
@@ -154,7 +153,7 @@ class Essentials():
                     arr[j] = temp
         return arr
     
-    #### Searching algorithms
+    # Searching algorithms
     def binary_search(length, arr, value):
         left = 0
         right = length

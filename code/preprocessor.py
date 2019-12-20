@@ -8,9 +8,7 @@ import numpy as np
 
 #### Class
 class Preprocessor():
-
     def __init__(self, file):
-
         # Import a sample image also 0 is for grey scale and store its properties
         self.file = file
         self.original_img = cv2.imread(file, 0)

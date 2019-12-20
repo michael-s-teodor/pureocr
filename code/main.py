@@ -11,9 +11,9 @@ from recogniser import Recogniser
 from network import Network
 
 #### Main
-img = Preprocessor("../samples/3.jpg")
+img = Preprocessor("../samples/2.jpg")
 recogniser = Recogniser()
 img.process_image()
 img.convert_to_binary()
-#img.preview_image()
+# img.preview_image()
 img.preview_chars()

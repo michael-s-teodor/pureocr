@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+@authors: Mihnea S. Teodorescu & Moe Assaf, University of Groningen
+"""
+
 #### Libraries
 # Own libraries
 from network import Network
@@ -6,12 +12,11 @@ from network import Network
 net = Network([10000, 10, 10, 94])
 
 class Recogniser():
-
+    
     def __init__(self):
         pass
     
     def retrieve_char(self, img):
-
         # Compute the output of the neural network   
         output = net.feed_forward(img)
 

@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+@authors: Mihnea S. Teodorescu & Moe Assaf, University of Groningen
+"""
+
 #### Libraries
 # Third-party libraries
 import numpy as np
@@ -6,7 +12,6 @@ import numpy as np
 class Network(object):
 
     def __init__(self, sizes):
-
         # sizes = number of neurons per layer [input, hidden, ..., hidden, output]
         self.num_layers = len(sizes)
         self.sizes = sizes
@@ -17,40 +22,39 @@ class Network(object):
         # Each neuron from layer n has sizes[n-1] weights
         self.weights = [np.random.randn(y, x) for x, y in zip(sizes[:-1], sizes[1:])]
 
-    def feedForward(self, a):
+    def feed_forward(self, a):
 
         # This function returns the output of the network when a is applied
         for b, w in zip(self.biases, self.weights):
             a = sigmoid(np.dot(w,a) + b)
         return a
 
-    def backPropagation(self, input, output):
-        a = self.feedForward(input)
-        dCost = 2*(-1*a+output)
-        dSigmoid = sigmoidDerivative(a)
-        d = dCost*dSigmoid
+    def back_propagation(self, input, output):
+        a = self.feed_forward(input)
+        d_cost = 2*(-1*a+output)
+        d_sigmoid = sigmoid_derivative(a)
+        d = d_cost * d_sigmoid
 
         dw = np.array(self.weights)
 
-        for layer in range(len(self.weights),4,-1):
-            layerOut = sigmoid(np.dot(w,a) + b)
-            dw[layer] = layerOut*d
+        for layer in range(len(self.weights), 4, -1):
+            layer_out = sigmoid(np.dot(w,a) + b)
+            dw[layer] = layer_out * d
         self.weights += dw
 
 
     def train(self, input, output, iterations):
         for i in range(iterations):
             if(iterations%100):
-                print(self.feedForward(input))
-            self.backPropagation(input,output)
+                print(self.feed_forward(input))
+            self.back_propagation(input,output)
 
 #### Helper functions
 def sigmoid(z):
     return 1.0/(1.0 + np.exp(-z))
 
-def sigmoidDerivative(z):
-    #Where z is the output = sigmoid(wx+b)
-    return z*(1-z)
+def sigmoid_derivative(z):
+    return z*(1-z) # Where z is the output = sigmoid(wx+b)
 
 if __name__ == "__main__":
     print("Debugging starting..")

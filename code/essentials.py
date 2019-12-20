@@ -1,8 +1,14 @@
-#### Class
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+@authors: Mihnea S. Teodorescu & Moe Assaf, University of Groningen
+"""
+
+#### Class declaration
 class Essentials():
 
-    def wham_sort(self, length, arr):
-
+    #### Sorting algorithms
+    def wham_sort(length, arr):
         # Break recursive step
         if (length <= 1):
             return
@@ -18,7 +24,6 @@ class Essentials():
             p += 1
 
         while (length - p):
-
             # Get prefix
             prefix[0] = arr[0]
             p = 1
@@ -67,7 +72,6 @@ class Essentials():
                     left += 1
     
     def wham_sort_by(self, length, arr, by):
-
         # Break recursive step
         if (length <= 1):
             return
@@ -83,7 +87,6 @@ class Essentials():
             p += 1
 
         while (length - p):
-
             # Get prefix
             prefix[0] = arr[0]
             p = 1
@@ -131,6 +134,16 @@ class Essentials():
                     idx += 1
                     left += 1
     
+    def bubble_sort(arr):
+        length = len(arr)
+        for i in range(length-1):
+            for j in range(length-1):
+                if (arr[j] > arr[j+1]):
+                    temp = arr[j+1]
+                    arr[j+1] = arr[j]
+                    arr[j] = temp
+        return arr
+    
     def bubble_sort_by(arr, by):
         length = len(arr)
         for i in range(length-1):
@@ -140,3 +153,20 @@ class Essentials():
                     arr[j+1] = arr[j]
                     arr[j] = temp
         return arr
+    
+    #### Searching algorithms
+    def binary_search(length, arr, value):
+        left = 0
+        right = length
+        mid
+        while (left + 1 < right):
+            mid = (left + right)/2
+            if (value < arr[mid]):
+                right = mid
+            else:
+                left = mid
+        if (length == 0 or arr[left] != value):
+            return -1
+        else:
+            return left
+

@@ -11,22 +11,17 @@ import numpy as np
 #### Class declaration
 class NeuralNetwork:
     def __init__(self, x, y):
-        self.layer = [[],[],[]]
+        self.layer = [[]] * 3
         self.layer[0] = x # input layer
-        self.weights = [[],[],[]]
+        self.weights = [[]] * 3
         self.weights[1]= np.random.rand(self.layer[0].shape[1],4) # considering we have 4 nodes in the hidden layer
         self.weights[2] = np.random.rand(4,1)
         self.y = y
         self.output = np. zeros(y.shape)
 
     def feed_forward(self):
-        """
-        self.layer[1] = sigmoid(np.dot(self.input, self.weights[1]))
-        self.layer[2] = sigmoid(np.dot(self.layer[1], self.weights[2]))
-        return self.layer[2]
-        """
         for i in range(1,3):
-            self.layer[i] = sigmoid(np.dot(self.layer[i-1], self.weights[i]))a
+            self.layer[i] = sigmoid(np.dot(self.layer[i-1], self.weights[i]))
         return self.layer[2]
         
     def back_prop(self):

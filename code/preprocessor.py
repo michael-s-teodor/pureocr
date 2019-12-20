@@ -50,18 +50,28 @@ class Preprocessor():
         return self.processed_img
 
     def preview_chars(self):
+        browsing = 1
+
         for row in range(len(self.char_anchors_rows)):
             for anchor in range(len(self.char_anchors_rows[row])):
-                char_copy  = copy_char_image(self.char_anchors_rows[row][anchor],self.img)
+                viewing = 1
+                while( browsing == 1 and viewing ):
+                    char_copy  = copy_char_image(self.char_anchors_rows[row][anchor],self.processed_img)
+                    char_copy = cv2.resize(char_copy,(300,300))
 
-                while True:
-                    cv2.imshow("Press any key to preview next letter", char_copy)
-                    key = cv2.waitKey(0) & 0xFF
+                    while True:
+                        cv2.imshow("Press any key to preview next letter", char_copy)
+                        key = cv2.waitKey(0) & 0xFF
 
-                    # If the q key was pressed, break from the loop
-                    if key != None:
-                        break
-                    cv2.destroyAllWindows()
+                        if key == 27: #ESC
+                            browsing = 0
+                            break
+                        elif key != None:
+                            viewing = 0
+                            break
+
+                        cv2.destroyAllWindows()
+
 
 
 #### Functions

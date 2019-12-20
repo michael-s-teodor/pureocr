@@ -3,6 +3,8 @@
 from essentials import Essentials
 # Third-party libraries
 import cv2
+import numpy as np
+
 
 #### Class
 class Preprocessor():
@@ -11,9 +13,9 @@ class Preprocessor():
 
         # Import a sample image also 0 is for grey scale and store its properties
         self.file = file
-        self.original_img = cv2.imread(file, 0) 
-        self.processed_img = cv2.imread(file, 0) 
-        self.img = cv2.imread(file, 0) 
+        self.original_img = cv2.imread(file, 0)
+        self.processed_img = cv2.imread(file, 0)
+        self.img = cv2.imread(file, 0)
 
         self.height, self.width = self.img.shape[0], self.img.shape[1]
         self.threshold = -1
@@ -47,14 +49,30 @@ class Preprocessor():
         self.processed_img = convert_to_binary_img(self.height, self.width, self.threshold, self.processed_img)
         return self.processed_img
 
+    def preview_chars(self):
+        for row in range(len(self.char_anchors_rows)):
+            for anchor in range(len(self.char_anchors_rows[row])):
+                char_copy  = copy_char_image(self.char_anchors_rows[row][anchor],self.img)
+
+                while True:
+                    cv2.imshow("Press any key to preview next letter", char_copy)
+                    key = cv2.waitKey(0) & 0xFF
+
+                    # If the q key was pressed, break from the loop
+                    if key != None:
+                        break
+                    cv2.destroyAllWindows()
+
+
 #### Functions
+
 def get_threshold(height, width, img):
     avg = 0
     for i in range(height):
         for j in range(width):
            avg += img[i][j]
     avg /= height*width
-    return 0.75*avg        
+    return 0.75*avg
 
 def convert_to_binary_img(height, width, threshold, img):
     for i in range(height):
@@ -90,7 +108,7 @@ def map_letter(x, y, temp_arr, threshold, height, width, img):
 
         # Find min x and y and max x and y
         if (x < temp_arr[0]):
-            temp_arr[0] = x 
+            temp_arr[0] = x
         if (y < temp_arr[1]):
             temp_arr[1] = y
         if (x > temp_arr[2]):
@@ -102,7 +120,7 @@ def map_letter(x, y, temp_arr, threshold, height, width, img):
             for m in range(-1,2):
                 if not (n == 0 and m == 0):
                     temp_arr = map_letter(x+n, y+m, temp_arr, threshold, height, width, img)
-                
+
     return temp_arr
 
 def draw_boxes_lines(anchors_rows, img):
@@ -146,7 +164,7 @@ def recognise_lines(char_anchors):
         else:
             row += 1
             n = 0
-            total = y     
+            total = y
             char_anchors_rows.append([])
             char_anchors_rows[row].append(char_anchors[i])
         n+=1
@@ -177,5 +195,14 @@ def merge_neighbours(char_anchors_rows):
                         char_anchors_rows[row][char][2] = max(c1[2],c2[2])
                         char_anchors_rows[row][char][3] = max(c1[3],c2[3])
                         char_anchors_rows[row].remove(c2)
-                        length -=1            
+                        length -=1
     return char_anchors_rows
+
+def copy_char_image(anchors,img):
+    #Anchors :  [x_min, y_min, x_max, y_max]
+    x1 = anchors[0]
+    y1 = anchors[1]
+    x2 = anchors[2]
+    y2 = anchors[3]
+    crop_img = img[y1:y2+1, x1:x2+1]
+    return crop_img

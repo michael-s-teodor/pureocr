@@ -11,7 +11,7 @@ from essentials import Essentials
 import cv2
 import numpy as np
 
-#### Class
+#### Class declaration
 class Preprocessor():
     def __init__(self, file):
         # Import a sample image also 0 is for grey scale and store its properties

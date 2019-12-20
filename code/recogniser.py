@@ -8,7 +8,7 @@
 # Own libraries
 from network import Network
 
-#### Class
+#### Class declaration
 net = Network([10000, 10, 10, 94])
 
 class Recogniser():

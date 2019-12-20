@@ -8,7 +8,7 @@
 # Third-party libraries
 import numpy as np
 
-#### Class
+#### Class declaration
 class Network(object):
     def __init__(self, sizes):
         # sizes = number of neurons per layer [input, hidden, ..., hidden, output]

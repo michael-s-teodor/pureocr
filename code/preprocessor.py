@@ -1,10 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+@authors: Mihnea S. Teodorescu & Moe Assaf, University of Groningen
+"""
+
 #### Libraries
 # Own libraries
 from essentials import Essentials
 # Third-party libraries
 import cv2
 import numpy as np
-
 
 #### Class
 class Preprocessor():
@@ -49,7 +54,6 @@ class Preprocessor():
 
     def preview_chars(self):
         browsing = 1
-
         for row in range(len(self.char_anchors_rows)):
             for anchor in range(len(self.char_anchors_rows[row])):
                 viewing = 1
@@ -61,7 +65,7 @@ class Preprocessor():
                         cv2.imshow("Press any key to preview next letter", char_copy)
                         key = cv2.waitKey(0) & 0xFF
 
-                        if key == 27: #ESC
+                        if key == 27: # ESC
                             browsing = 0
                             break
                         elif key != None:
@@ -70,10 +74,7 @@ class Preprocessor():
 
                         cv2.destroyAllWindows()
 
-
-
 #### Functions
-
 def get_threshold(height, width, img):
     avg = 0
     for i in range(height):
@@ -96,7 +97,6 @@ def find_letters(height, width, threshold, img):
     for i in range(height):
         for j in range(width):
             if (img[i][j] < threshold):
-
                 # Map letter
                 temp_arr = [j, i, j, i]
                 temp_arr = map_letter(j, i, temp_arr, threshold, height, width, img)
@@ -110,11 +110,10 @@ def map_letter(x, y, temp_arr, threshold, height, width, img):
         return temp_arr
 
     if (img[y][x] < threshold):
-
-        # Delete so that we dont encounter it again
+        # Delete so that we won't encounter again
         img[y][x] = -1
 
-        # Find min x and y and max x and y
+        # Find min_x, min_y and max_x, max_y
         if (x < temp_arr[0]):
             temp_arr[0] = x
         if (y < temp_arr[1]):
@@ -128,11 +127,9 @@ def map_letter(x, y, temp_arr, threshold, height, width, img):
             for m in range(-1,2):
                 if not (n == 0 and m == 0):
                     temp_arr = map_letter(x+n, y+m, temp_arr, threshold, height, width, img)
-
     return temp_arr
 
 def draw_boxes_lines(anchors_rows, img):
-
     # Draw boxes around letters in rows with the same colour and alternate
     for row in range(len(anchors_rows)):
         img = draw_boxes(anchors_rows[row], row%2*100,img)
@@ -157,14 +154,11 @@ def recognise_lines(char_anchors):
     total = (char_anchors[0][1] + char_anchors[0][3])/2
     n = 1
     char_anchors_rows.append([])
-
     deviation = 20 # NOTE: needs to be adjusted so that its adaptive
 
     for i in range(len(char_anchors)):
         avg = total/n
-
-        # Calculate middle y
-        y = (char_anchors[i][1] + char_anchors[i][3])/2
+        y = (char_anchors[i][1] + char_anchors[i][3])/2 # middle y
 
         if (y < avg + deviation and y > avg - deviation):
             total += y
@@ -180,7 +174,6 @@ def recognise_lines(char_anchors):
 
 def sort_letters_in_order(char_anchors_rows):
     for row in range(len(char_anchors_rows)):
-
         # Sort by x
         Essentials().wham_sort_by(len(char_anchors_rows[row]), char_anchors_rows[row], 0)
     return char_anchors_rows
@@ -195,7 +188,6 @@ def merge_neighbours(char_anchors_rows):
 
                 # Check if theyre on top of each other
                 if (c1[1] >= c2[3] or c1[3] <= c2[1]):
-
                     # Check if their x's intersect
                     if( c2[0] <= c1[2] ):
                         char_anchors_rows[row][char][0] = min(c1[0],c2[0])
